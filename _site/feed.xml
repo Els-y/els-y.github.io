@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2018-03-13T22:18:24+08:00</updated><id>http://localhost:4000/</id><title type="html">从入门到扑街</title><subtitle>从入门到扑街</subtitle><author><name>叶佳全</name></author><entry><title type="html">NodeJS: Mongoose Populate 基本使用</title><link href="http://localhost:4000/nodejs/nodejs-mongoose-populate/" rel="alternate" type="text/html" title="NodeJS: Mongoose Populate 基本使用" /><published>2018-03-13T00:00:00+08:00</published><updated>2018-03-13T00:00:00+08:00</updated><id>http://localhost:4000/nodejs/nodejs-mongoose-populate</id><content type="html" xml:base="http://localhost:4000/nodejs/nodejs-mongoose-populate/">&lt;h2 id=&quot;环境&quot;&gt;环境&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;操作系统: Ubuntu 16.04&lt;/li&gt;
+  &lt;li&gt;Node: v7.0.0&lt;/li&gt;
+  &lt;li&gt;Express: 4.x&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;模块及样式&quot;&gt;模块及样式&lt;/h2&gt;
+&lt;p&gt;markdown解析工具 和 样式及语法高亮的插件有很多，比如解析工具还有&lt;a href=&quot;https://github.com/evilstreak/markdown-js&quot;&gt;markdown-js&lt;/a&gt;，语法高亮还有&lt;a href=&quot;https://github.com/google/code-prettify&quot;&gt;Google Code Prettify&lt;/a&gt;，等等。&lt;/p&gt;
+
+&lt;p&gt;这里我们只介绍使用其中的三个，作为一个组合。&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Markdown解析: &lt;a href=&quot;https://github.com/chjj/marked&quot;&gt;marked v0.3.6&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Markdown-css: &lt;a href=&quot;https://github.com/sindresorhus/github-markdown-css&quot;&gt;github-markdown-css&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;语法高亮: &lt;a href=&quot;http://prismjs.com/&quot;&gt;prismjs&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;marked&quot;&gt;Marked&lt;/h3&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;A full-featured markdown parser and compiler, written in JavaScript. Built for speed.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;这是它的&lt;a href=&quot;https://github.com/chjj/marked&quot;&gt;github&lt;/a&gt;上的介绍，安装和基本使用在&lt;a href=&quot;https://github.com/chjj/marked&quot;&gt;github&lt;/a&gt;上都有，我使用它的最新版本 v0.3.6。
+用它来解析 &lt;em&gt;markdown&lt;/em&gt; 语法。&lt;/p&gt;
+
+&lt;h3 id=&quot;github-markdown-css&quot;&gt;Github-markdown-css&lt;/h3&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;The minimal amount of CSS to replicate the GitHub Markdown style&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;用来给解析好的 &lt;em&gt;html&lt;/em&gt; 加样式，这里有个使用它的示例: &lt;a href=&quot;https://sindresorhus.com/github-markdown-css/&quot;&gt;Demo&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;prismjs&quot;&gt;Prismjs&lt;/h3&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;Prism is a lightweight, extensible syntax highlighter, built with modern web standards in mind. It’s used in thousands of websites, including some of those you visit daily.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;它是一款轻量、可扩展的代码语法高亮库，使用现代化的 Web 标准构建的，同时支持大部分流行的编程语言，并且支持多种主题样式。使用起来也很简单，只需要在 &lt;em&gt;html&lt;/em&gt; 中引入 &lt;em&gt;css&lt;/em&gt; 和 &lt;em&gt;js&lt;/em&gt; 文件即可。&lt;/p&gt;
+
+&lt;p&gt;我们可以根据需要自己在 &lt;a href=&quot;http://prismjs.com/download.html&quot;&gt;Prismjs Download&lt;/a&gt; 中选择主题、语言和各种插件。&lt;/p&gt;
+
+&lt;h2 id=&quot;目录介绍&quot;&gt;目录介绍&lt;/h2&gt;
+&lt;p&gt;就是 &lt;em&gt;express-generator&lt;/em&gt; 默认生成的目录，在根目录加了个 markdown 文件夹，里面放 &lt;code&gt;.md&lt;/code&gt; 文件。在 public 目录里的 javascript 和 stylesheets 目录分别放下载好的 &lt;em&gt;js&lt;/em&gt; 和 &lt;em&gt;css&lt;/em&gt; 文件。&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;app/
+	bin/
+    	www
+    markdown/
+    	README.md  # marked github上的readme
+    node_modules/
+    	...
+    public/
+    	javascripts/
+        	prism.js  # 1
+        stylesheets/
+        	style.css
+        	prism.css  # 2
+            github-markdown.css  # 3
+    routes/
+    	index.js
+    views/
+    	layout.jade
+    	index.jade
+    app.js
+    package.json
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h2 id=&quot;基本使用&quot;&gt;基本使用&lt;/h2&gt;
+&lt;p&gt;将 routes/index.js 改为&lt;/p&gt;
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;express&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'express'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;router&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;express&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;Router&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;marked&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'marked'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;fs&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'fs'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+&lt;span class=&quot;cm&quot;&gt;/* GET home page. */&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;router&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'/'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;req&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;res&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;fs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;readFile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'markdown/README.md'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;err&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;html&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;marked&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;toString&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;());&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;res&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;send&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;html&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+
+&lt;span class=&quot;nx&quot;&gt;module&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;exports&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;router&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;显示效果
+&lt;img src=&quot;http://img.blog.csdn.net/20161202225606039&quot; alt=&quot;显示效果1&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;这么写的话，整个页面只能单独的显示一个 markdown 文件，要引入 css 或者 js 的话会很麻烦。&lt;/p&gt;
+
+&lt;h2 id=&quot;使用-jade--github-markdown-css--prism&quot;&gt;使用 jade + Github-markdown-css + prism&lt;/h2&gt;
+&lt;p&gt;express 默认的模板引擎为 &lt;em&gt;jade&lt;/em&gt;，所以这里以 &lt;em&gt;jade&lt;/em&gt; 为例。
+将 routes/index.js 改为&lt;/p&gt;
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;express&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'express'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;router&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;express&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;Router&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;marked&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'marked'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;fs&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'fs'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+&lt;span class=&quot;cm&quot;&gt;/* GET home page. */&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;router&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'/'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;req&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;res&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;fs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;readFile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'markdown/README.md'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;err&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;html&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;marked&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;toString&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;());&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;res&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;render&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'index'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;mdContent&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;html&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+
+&lt;span class=&quot;nx&quot;&gt;module&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;exports&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;router&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;在 views/layout.jade 中引入 prism.js、prism.css 和 github-markdown.css。&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='/stylesheets/github-markdown.css')
+    link(rel='stylesheet', href='/stylesheets/prism.css')
+  body
+    block content
+    script(src='/javascripts/prism.js')
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;根据 &lt;a href=&quot;https://github.com/sindresorhus/github-markdown-css&quot;&gt;github-markdown-css&lt;/a&gt; 上的使用说明&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;Import the github-markdown.css file and add a markdown-body class to the container of your rendered Markdown and set a width for it.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;解析后的 markdown 要放在一个以 &lt;code&gt;markdown-body&lt;/code&gt; 为类名的容器中。&lt;/p&gt;
+
+&lt;p&gt;views/index.jade 改为&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-jade&quot;&gt;extends layout
+
+block content
+  .markdown-body
+    != mdContent
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;这里的 &lt;code&gt;mdContent&lt;/code&gt; 一会儿渲染为 &lt;em&gt;marked&lt;/em&gt; 解析后的内容。&lt;/p&gt;
+
+&lt;p&gt;我们还可以在 stylesheets/style.css 中加上&lt;/p&gt;
+&lt;div class=&quot;language-css highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nc&quot;&gt;.markdown-body&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nl&quot;&gt;box-sizing&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;border-box&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;nl&quot;&gt;min-width&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;200px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;nl&quot;&gt;max-width&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;980px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;nl&quot;&gt;margin&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;auto&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;nl&quot;&gt;padding&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;45px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;整体页面显得更规整一点。&lt;/p&gt;
+
+&lt;p&gt;显示效果
+&lt;img src=&quot;http://img.blog.csdn.net/20161202230211526&quot; alt=&quot;显示效果2&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;这里代码中的 &lt;code&gt;=&lt;/code&gt; 与背景不太和谐，我们只要改一下 prism.css 就好了&lt;/p&gt;
+&lt;div class=&quot;language-css highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nc&quot;&gt;.token.operator&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;
+&lt;span class=&quot;nc&quot;&gt;.token.entity&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;
+&lt;span class=&quot;nc&quot;&gt;.token.url&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;
+&lt;span class=&quot;nc&quot;&gt;.language-css&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;.token.string&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;
+&lt;span class=&quot;nc&quot;&gt;.style&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;.token.string&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+	&lt;span class=&quot;nl&quot;&gt;color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;#a67f59&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+	&lt;span class=&quot;c&quot;&gt;/*background: hsla(0, 0%, 100%, .5);*/&lt;/span&gt;
+	&lt;span class=&quot;nl&quot;&gt;background&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;transparent&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;全部完成，看起来舒服多啦。&lt;/p&gt;
+
+&lt;p&gt;完整代码下载: &lt;a href=&quot;https://github.com/Els-y/csdn-demos/tree/master/express%2Bmarkdown&quot;&gt;Github express+markdown&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;以上所有，如有错误，麻烦指出，我会及时更改的。&lt;/p&gt;</content><author><name>叶佳全</name></author><category term="Mongoose" /><summary type="html">环境 操作系统: Ubuntu 16.04 Node: v7.0.0 Express: 4.x</summary></entry></feed>
