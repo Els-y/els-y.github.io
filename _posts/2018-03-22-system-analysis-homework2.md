@@ -107,4 +107,4 @@ tags:
 * 每个人的任务是 1-2 项。
 * 至少包含一个团队活动任务。
 
-![kanban](/assets/images/kanban.png)
+![kanban](/assets/images/system_analysis/hw2_kanban.png)

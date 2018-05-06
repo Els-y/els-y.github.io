@@ -10,16 +10,16 @@ tags:
 
 - a. 阅读 Asg_RH 文档，绘制用例图。 按 Task1 要求，请使用工具 UMLet，截图格式务必是 png 并控制尺寸
 
-  ![reserve_hotel](/assets/images/reserve_hotel.png)
+  ![reserve_hotel](/assets/images/system_analysis/hw3_reserve_hotel.png)
 
 - b. 选择你熟悉的定旅馆在线服务系统（或移动 APP），如绘制用例图。并满足以下要求：
 
-  ![quna](/assets/images/qunar_index.png)
+  ![quna](/assets/images/system_analysis/hw3_qunar_index.png)
 
   - 对比 Asg_RH 用例图，请用色彩标注出创新用例或子用例：黄色背景色
   - 尽可能识别外部系统，并用色彩标注新的外部系统和服务：青色背景色
 
-  ![quna](/assets/images/qunar_common.png)
+  ![quna](/assets/images/system_analysis/hw3_qunar_common.png)
 
 - c. 对比两个时代、不同地区产品的用例图，总结在项目早期，发现创新的思路与方法
 
@@ -42,7 +42,7 @@ tags:
 
 - a. 在（任务b）基础上，用活动图建模找酒店用例。简述利用流程图发现子用例的方法。
 
-  ![qunar activity](/assets/images/qunar_activity.png)
+  ![qunar activity](/assets/images/system_analysis/hw3_qunar_activity.png)
 
   在画流程图时，发现新的子用例的情况有：
 
@@ -53,11 +53,11 @@ tags:
 
 - b. 选择你身边的银行 ATM，用活动图描绘取款业务流程
 
-  ![bank activity](/assets/images/bank_activity.png)
+  ![bank activity](/assets/images/system_analysis/hw3_bank_activity.png)
 
 - c. 查找淘宝退货业务官方文档，使用多泳道图，表达客户、淘宝网、淘宝商家服务系统、商家等用户和系统协同完成退货业务的过程。分析客户要完成退货业务，在淘宝网上需要实现哪些系统用例。
 
-  ![taobao](/assets/images/taobao.png)
+  ![taobao](/assets/images/system_analysis/hw3_taobao.png)
 
   需要实现的系统用例：生成退款单、管理退款单、审核判定。
 

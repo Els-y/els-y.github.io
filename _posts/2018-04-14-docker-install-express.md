@@ -215,7 +215,7 @@ node                8.0.0               065e283f68bd        10 months ago       
 
 启动后，在浏览器输入 `localhost:8000` 就可以看到如下页面。
 
-![docker-express](/assets/images/docker_express.png)
+![docker-express](/assets/images/system_analysis/docker_express.png)
 
 ## 终止容器
 

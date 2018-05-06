@@ -15,7 +15,7 @@ tags:
   - 在单页面应用（如 vue）中，E 一般与数据库构建有关， M 一般与 [store 模式](https://cn.vuejs.org/v2/guide/state-management.html) 有关
   - 在 java web 应用中，E 一般与数据库构建有关， M 一般与 session 有关
 
-![asg](/assets/images/system_analysis_hw5_asg.png)
+![asg](/assets/images/system_analysis/hw4_asg.png)
 
 ### b. 数据库建模(E-R 模型)
 
@@ -25,7 +25,7 @@ tags:
 
 * 不负责的链接 <http://www.cnblogs.com/mcgrady/archive/2013/05/25/3098588.html>
 
-  ![](/assets/images/system_analysis_hw5_er.png)
+  ![](/assets/images/system_analysis/hw4_er.png)
 
 * 导出 Mysql 物理数据库的脚本
 
